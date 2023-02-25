@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.redhatenergy.tsr.ic.schema.proto.trade";
+option java_outer_classname = "TradeProtos";
+
+
+import "google/protobuf/timestamp.proto";
+import "redhatenergy/tsr/ic/schema/proto/common.proto";
+
+package redhatenergy.tsr.ic.schema.proto.trade;
+
+message TradeId {
+  string source = 1;
+  string id = 2;
+}
+
+message TradeLegId {
+  string source = 1;
+  string id = 2;
+}
+
+message Trade {
+  string uti = 1;
+  repeated TradeId trade_ids = 2;
+  redhatenergy.tsr.ic.schema.proto.common.AssetClass asset_class = 3;
+  string asset_sub_class = 4;
+  string commodity_group = 5;
+  string commodity_type = 6;
+  string security_type = 7;
+  string exchange = 8;
+  redhatenergy.tsr.ic.schema.proto.common.Date tradeDate = 9;
+  redhatenergy.tsr.ic.schema.proto.common.Date startDate = 10;
+  redhatenergy.tsr.ic.schema.proto.common.Date endDate = 11;
+  google.protobuf.Timestamp execution_timestamp = 12;
+
+  message TradeLeg {
+    repeated TradeLegId trade_leg_ids = 1;
+    redhatenergy.tsr.ic.schema.proto.common.SettlementMethod settlement_method = 2;
+    string payer_lei = 3;
+    string receiver_lei = 4;
+    double quantity = 5;
+    redhatenergy.tsr.ic.schema.proto.common.UnitOfMeasure quantity_unit_of_measure = 6;
+    redhatenergy.tsr.ic.schema.proto.common.Frequency quantity_frequency = 7;
+    double price = 8;
+    redhatenergy.tsr.ic.schema.proto.common.Currency price_currency = 9;
+  }
+
+  repeated TradeLeg trade_legs = 13;
+
+}
